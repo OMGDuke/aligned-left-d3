@@ -1,5 +1,5 @@
-var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-                11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13, 11, 12, 15, 20, 18, 17,
+                16, 18, 23, 25 ];
 var width = 500;
 var height = Math.max.apply(null, dataset) * 5;
 var barPadding = 1;
@@ -44,16 +44,17 @@ barSvg.selectAll("text")
   .attr("y", setLabelY)
   .attr("font-family", "sans-serif")
   .attr("font-size", "11px")
-  .attr("fill", "white");
+  .attr("fill", "white")
+  .attr("text-anchor", "middle");
 
 function returnData(d) {
   return d;
 }
 
 function setLabelX(d, i) {
-  return i * (width / dataset.length) + 5;
+  return i * (width / dataset.length) + (width / dataset.length - barPadding) / 2;
 }
 
 function setLabelY(d) {
-  return height - (d * 4) + 15;
+  return height - (d * 4) + 14;
 }
