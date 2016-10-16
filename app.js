@@ -1,6 +1,6 @@
-var dataset = [ 25, 7, 5, 26, 11, 8, 25, 14, 23, 19, 14, 11, 22, 29, 11, 13, 12,
-                17, 18, 10, 24, 18, 25, 9, 3 ];
-
+var dataset = [ 5, 10, 15, 20, 25 ];
+var width = 500;
+var height = 50;
 
 d3.select("body")
   .selectAll("div")
@@ -10,19 +10,50 @@ d3.select("body")
   .attr("class", "bar")
   .style("height", setBarHeights);
 
+function setBarHeights(d) {
+    var barHeight = d * 5;
+    return barHeight + "px";
+}
+
+var svg = d3.select("body")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+var circles = svg.selectAll("circle")
+    .data(dataset)
+    .enter()
+    .append("circle");
+
+circles.attr("cx", setXPosition)
+  .attr("cy", height/2)
+  .attr("r", returnData)
+  .attr("fill", "yellow")
+  .attr("stroke", "orange")
+  .attr("stroke-width", findStrokeWidth);
+
+function setXPosition(d,i) {
+  return (i * 50) + 25;
+}
+
+function returnData(d) {
+  return d;
+}
+
+function findStrokeWidth(d) {
+  return d / 2;
+}
+
 d3.select("body")
   .selectAll("p")
   .data(dataset)
   .enter()
   .append("p")
-  .text(function(d, i) {
-    return "Array Element "+ (i + 1) + ": " + d;
-  })
+  .text(dataStrings)
   .style("color", setTextColor);
 
-function setBarHeights(d) {
-    var barHeight = d * 5;
-    return barHeight + "px";
+function dataStrings(d,i) {
+  return "Array Element "+ (i + 1) + ": " + d;
 }
 
 function setTextColor(d) {
