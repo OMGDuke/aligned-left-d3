@@ -1,39 +1,53 @@
-var dataset = [ 5, 10, 15, 20, 25 ];
+var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+                11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
 var width = 500;
-var height = 50;
+var height = Math.max.apply(null, dataset) * 5;
+var barPadding = 1;
 
-d3.select("body")
-  .selectAll("div")
-  .data(dataset)
-  .enter()
-  .append("div")
-  .attr("class", "bar")
-  .style("height", setBarHeights);
-
-function setBarHeights(d) {
-    var barHeight = d * 5;
-    return barHeight + "px";
-}
-
-var svg = d3.select("body")
+var barSvg = d3.select("body")
   .append("svg")
   .attr("width", width)
   .attr("height", height);
 
-var circles = svg.selectAll("circle")
-    .data(dataset)
-    .enter()
-    .append("circle");
+barSvg.selectAll("rect")
+  .data(dataset)
+  .enter()
+  .append("rect")
+  .attr("x", setBarX)
+  .attr("y", setBarY)
+  .attr("width", width / dataset.length - barPadding)
+  .attr("height", setBarHeight)
 
-circles.attr("cx", setXPosition)
+function setBarX(d, i) {
+  return i * (width / dataset.length);
+}
+
+function setBarY(d) {
+  return height - d * 4 ;
+}
+
+function setBarHeight(d) {
+  return d * 4;
+}
+
+var circleSvg = d3.select("body")
+  .append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+circleSvg.selectAll("circle")
+  .data(dataset)
+  .enter()
+  .append("circle")
+  .attr("cx", setCirclePosition)
   .attr("cy", height/2)
   .attr("r", returnData)
   .attr("fill", "yellow")
   .attr("stroke", "orange")
   .attr("stroke-width", findStrokeWidth);
 
-function setXPosition(d,i) {
-  return (i * 50) + 25;
+function setCirclePosition(d,i) {
+  return (i + 1) * (50 + d);
 }
 
 function returnData(d) {
