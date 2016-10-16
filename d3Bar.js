@@ -34,3 +34,26 @@ function setBarHeight(d) {
 function setBarColor(d) {
   return "rgb(0, 0, " + (d * 10) + ")";
 }
+
+barSvg.selectAll("text")
+  .data(dataset)
+  .enter()
+  .append("text")
+  .text(returnData)
+  .attr("x", setLabelX)
+  .attr("y", setLabelY)
+  .attr("font-family", "sans-serif")
+  .attr("font-size", "11px")
+  .attr("fill", "white");
+
+function returnData(d) {
+  return d;
+}
+
+function setLabelX(d, i) {
+  return i * (width / dataset.length) + 5;
+}
+
+function setLabelY(d) {
+  return height - (d * 4) + 15;
+}
