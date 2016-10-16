@@ -17,7 +17,7 @@ barSvg.selectAll("rect")
   .attr("y", setBarY)
   .attr("width", width / dataset.length - barPadding)
   .attr("height", setBarHeight)
-  .attr("fill", "teal");
+  .attr("fill", setBarColor);
 
 function setBarX(d, i) {
   return i * (width / dataset.length);
@@ -29,4 +29,8 @@ function setBarY(d) {
 
 function setBarHeight(d) {
   return d * 4;
+}
+
+function setBarColor(d) {
+  return "rgb(0, 0, " + (d * 10) + ")";
 }
