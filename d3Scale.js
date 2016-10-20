@@ -1,10 +1,21 @@
-var dataset = [
-  [5, 20], [480, 90], [250, 50], [100, 33], [330, 95], [410, 12], [475, 44],
-  [25, 67], [85, 21], [220, 88]
-];
+// var dataset = [
+//   [5, 20], [480, 90], [250, 50], [100, 33], [330, 95], [410, 12], [475, 44],
+//   [25, 67], [85, 21], [220, 88], [600, 150]
+// ];
+
+var dataset = [];
+var numDataPoints = 50;
+var xRange = Math.random() * 1000;
+var yRange = Math.random() * 1000;
+for (var i = 0; i < numDataPoints; i++) {
+    var newNumber1 = Math.round(Math.random() * xRange);
+    var newNumber2 = Math.round(Math.random() * yRange);
+    dataset.push([newNumber1, newNumber2]);
+}
+
 var width = 500;
-var height = 100;
-var padding = 20;
+var height = 200;
+var padding = 30;
 
 var xScale = d3.scaleLinear()
   .domain([0, d3.max(dataset, function(d) { return d[0]; })])
@@ -35,19 +46,20 @@ function scaleYValue(d) {
   return yScale(d[1]);
 }
 
-svg.selectAll("text")
-   .data(dataset)
-   .enter()
-   .append("text")
-   .text(function(d) {
-      return d[0] + "," + d[1];
-   })
-   .attr("x", function(d) {
-      return xScale(d[0]);
-   })
-   .attr("y", function(d) {
-      return yScale(d[1]);
-   })
-   .attr("font-family", "sans-serif")
-   .attr("font-size", "11px")
-   .attr("fill", "red");
+var xAxis = d3.axisBottom()
+  .scale(xScale)
+  .ticks(5);
+
+svg.append("g")
+  .attr("class", "axis")
+  .attr("transform", "translate(0," + (height - padding) + ")")
+  .call(xAxis);
+
+var yAxis = d3.axisLeft()
+  .scale(yScale)
+  .ticks(5);
+
+svg.append("g")
+  .attr("class", "axis")
+  .attr("transform", "translate(" + padding + ", 0)")
+  .call(yAxis);
