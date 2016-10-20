@@ -3,7 +3,7 @@ var dataset = [
   [25, 67], [85, 21], [220, 88]
 ];
 var width = 500;
-var height = 100
+var height = 100;
 
 var svg = d3.select("body")
   .append("svg")
